@@ -19,5 +19,9 @@ To set application port, provide:
 ```bash
 PORT=3000
 ```
+To set Weatherstack API access key, provide:
+```bash
+WEATHERSTACK_API_ACCESS_KEY=your-access-key
+```
 
 You can modify those values to adjust to your settings.
