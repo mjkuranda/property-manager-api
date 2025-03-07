@@ -24,4 +24,11 @@ To set Weatherstack API access key, provide:
 WEATHERSTACK_API_ACCESS_KEY=your-access-key
 ```
 
+To set MongoDB, provide:
+```bash
+MONGO_HOSTNAME=mongo-hostname
+MONGO_PORT=27017
+MONGO_DBNAME=propertydb
+```
+
 You can modify those values to adjust to your settings.
