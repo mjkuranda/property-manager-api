@@ -15,8 +15,8 @@ export class WeatherStackService {
             logger.info(`Successfully received weather information for ${city}, ${state}, ${zipCode}.`);
 
             return await response.json<WsApiResponse>();
-        } catch (error) {
-            logger.error(`Error fetching data: ${error.message}`);
+        } catch (err: any) {
+            logger.error(`Error fetching data: ${err.message}`);
 
             return null;
         }
