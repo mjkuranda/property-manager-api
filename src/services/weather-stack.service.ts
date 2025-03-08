@@ -6,7 +6,7 @@ export class WeatherStackService {
 
     public async get(city: string, state: string, zipCode: string): Promise<WsApiResponse> {
         try {
-            const response = await fetch(`http://api.weatherstack.com/current?access_key=${config.wsApiAccessKey}&query=${city},${state},${zipCode}`);
+            const response = await fetch(`http://api.weatherstack.com/current?access_key=${config?.wsApiAccessKey}&query=${city},${state},${zipCode}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
