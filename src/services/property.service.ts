@@ -1,10 +1,10 @@
 import { PropertyRepository } from '../database/repositories/property.repository';
-import { PropertyChunk } from '../types/property.repository.type';
+import { PropertyChunk, PropertyFilters } from '../types/property.repository.type';
 import { PropertyDocument } from '../database/documents/property.document';
 import { logger } from '../logger';
 import { WeatherStackService } from './weather-stack.service';
 import { CreatePropertyDto } from '../dtos/create-property.dto';
-import { isValidObjectId } from 'mongoose';
+import { isValidObjectId, SortOrder } from 'mongoose';
 
 export class PropertyService {
 
@@ -13,8 +13,8 @@ export class PropertyService {
         private readonly weatherStackService: WeatherStackService
     ) {}
 
-    public async getAll(page: number = 1, limit: number = 10): Promise<PropertyChunk> {
-        const chunk: PropertyChunk = await this.propertyRepository.getAll(page, limit);
+    public async getAll(page: number = 1, limit: number = 10, filters?: PropertyFilters, sortOrder?: SortOrder): Promise<PropertyChunk> {
+        const chunk: PropertyChunk = await this.propertyRepository.getAll(page, limit, filters, sortOrder);
 
         logger.info(`Found ${chunk.total} properties in total.`);
 
