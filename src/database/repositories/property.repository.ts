@@ -1,17 +1,18 @@
-import { Model } from 'mongoose';
+import { Model, SortOrder } from 'mongoose';
 import { PropertyDocument } from '../documents/property.document';
-import { PropertyChunk } from '../../types/property.repository.type';
+import { PropertyChunk, PropertyFilters } from '../../types/property.repository.type';
 import { CreatePropertyDto } from '../../dtos/create-property.dto';
 
 export class PropertyRepository {
 
     constructor(private readonly propertyModel: Model<PropertyDocument>) {}
 
-    public async getAll(page: number = 1, limit: number = 10): Promise<PropertyChunk> {
+    public async getAll(page: number = 1, limit: number = 10, filters?: PropertyFilters, sortOrder?: SortOrder): Promise<PropertyChunk> {
         const skip = (page - 1) * limit;
+        const sortValue = sortOrder === 'asc' ? 1 : -1;
 
         const [properties, total] = await Promise.all([
-            this.propertyModel.find().skip(skip).limit(limit),
+            this.propertyModel.find(filters ?? {}).sort({ createdAt: sortValue }).skip(skip).limit(limit),
             this.propertyModel.countDocuments()
         ]);
 

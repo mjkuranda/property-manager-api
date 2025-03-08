@@ -12,7 +12,8 @@
         "moduleResolution": "Node",
         "target": "ES2020",
         "strict": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "skipLibCheck": true
     },
     "include": ["src"],
     "exclude": ["node_modules"]

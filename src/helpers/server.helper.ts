@@ -2,13 +2,16 @@ import express, { Express } from 'express';
 import { Server } from 'node:http';
 import cors from 'cors';
 import { config } from '../config';
+import { createYoga } from 'graphql-yoga';
+import { schema } from '../graphql/schema';
 
 export function initializeApp(): Express {
     const app = express();
+    const yoga = createYoga({ schema });
 
     app.use(cors());
     app.use(express.json());
-    // TODO: /api route
+    app.use('/graphql', yoga);
 
     return app;
 }

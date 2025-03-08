@@ -4,7 +4,7 @@ export const propertySchema = new Schema(
     {
         city: { type: String, required: true },
         street: { type: String, required: true },
-        state: { type: Number, required: true },
+        state: { type: String, required: true },
         zipCode: { type: String, required: true },
         weatherData: { type: Object, required: true },
         lat: { type: Number, required: true },

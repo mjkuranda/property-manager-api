@@ -6,3 +6,5 @@ export interface PropertyChunk {
     page: number;
     pages: number;
 }
+
+export type PropertyFilters = Partial<Pick<PropertyDocument, 'city' | 'state' | 'zipCode'>>;
