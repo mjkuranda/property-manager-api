@@ -2,7 +2,7 @@ import { PropertyService } from '../services/property.service';
 import { PropertyRepository } from '../database/repositories/property.repository';
 import { WeatherStackService } from '../services/weather-stack.service';
 import { logger } from '../logger';
-import mongoose, { isValidObjectId } from 'mongoose';
+import mongoose from 'mongoose';
 import { propertyModel } from '../database/models/property.model';
 
 jest.mock('../database/repositories/property.repository');
@@ -37,11 +37,8 @@ describe('PropertyService', () => {
 
     test('should throw error for invalid id in getById', async () => {
         const invalidId = 'invalid-id';
-        // const isValidObjectIdMock = jest.spyOn(isValidObjectId, 'mockReturnValue').mockReturnValue(false as any);
 
         await expect(propertyService.getById(invalidId)).rejects.toThrow('Not valid object id.');
-
-        // isValidObjectIdMock.mockRestore();
     });
 
     test('should create property successfully', async () => {
@@ -74,10 +71,7 @@ describe('PropertyService', () => {
 
     test('should throw error for invalid id in delete', async () => {
         const invalidId = 'invalid-id';
-        // const isValidObjectIdMock = jest.spyOn(isValidObjectId, 'mockReturnValue').mockReturnValue(false);
 
         await expect(propertyService.delete(invalidId)).rejects.toThrow('Not valid object id.');
-
-        // isValidObjectIdMock.mockRestore();
     });
 });
