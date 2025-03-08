@@ -12,7 +12,7 @@ export class MongoService {
 
             try {
                 await mongoose.disconnect();
-                logger.info('MongoDB connection closed');
+                logger.info('MongoDB connection closed.');
                 process.exit(0);
             } catch (error) {
                 logger.error('Error while disconnecting MongoDB:', error);
@@ -21,9 +21,10 @@ export class MongoService {
         };
 
         try {
+            logger.info('Attempt to connect to the MongoDB.');
             await mongoose.connect(uri);
 
-            logger.info('Successfully connected to MongoDB');
+            logger.info('Successfully connected to MongoDB.');
         } catch (err) {
             logger.error('Error connecting to MongoDB:', err);
         }
