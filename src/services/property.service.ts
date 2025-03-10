@@ -6,6 +6,9 @@ import { WeatherStackService } from './weather-stack.service';
 import { CreatePropertyDto } from '../dtos/create-property.dto';
 import { isValidObjectId, SortOrder } from 'mongoose';
 import { usStates } from '../constants';
+import { NotValidStateError } from '../errors/not-valid-state.error';
+import { NotValidObjectIdError } from '../errors/not-valid-object-id.error';
+import { NotFoundError } from '../errors/not-found.error';
 
 export class PropertyService {
 
@@ -26,15 +29,17 @@ export class PropertyService {
         if (!isValidObjectId(id)) {
             logger.error('Not valid object id.');
 
-            throw new Error('Not valid object id.');
+            throw new NotValidObjectIdError();
         }
 
         const property = await this.propertyRepository.getById(id);
 
         if (!property) {
-            logger.error(`Property with "${id}" ID does not exist.`);
+            const message = `Property with "${id}" ID does not exist.`;
 
-            throw new Error('Not found.');
+            logger.error(message);
+
+            throw new NotFoundError(message);
         }
 
         logger.info(`Property with "${id}" ID has been found.`);
@@ -44,7 +49,7 @@ export class PropertyService {
 
     public async create(city: string, street: string, state: string, zipCode: number) {
         if (!usStates.includes(state)) {
-            throw new Error(`${state} is not a valid US state!`);
+            throw new NotValidStateError(state);
         }
 
         let response;
@@ -67,10 +72,14 @@ export class PropertyService {
         if (!isValidObjectId(id)) {
             logger.error('Not valid object id.');
 
-            throw new Error('Not valid object id.');
+            throw new NotValidObjectIdError();
         }
 
-        await this.propertyRepository.delete(id);
+        const wasDeleted = await this.propertyRepository.delete(id);
+
+        if (!wasDeleted) {
+            throw new NotFoundError(`Property with "${id}" ID has not been found.`);
+        }
 
         return { success: true, message: 'Property deleted' };
     }

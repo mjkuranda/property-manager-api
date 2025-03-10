@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.5.0] - 2025-03-10
 ### Added
+- [Marek Kurańda](https://github.com/mjkuranda): Different custom errors to throw different status codes.
 - [Marek Kurańda](https://github.com/mjkuranda): `constants` file.
 
 ### Fixed

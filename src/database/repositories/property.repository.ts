@@ -32,7 +32,9 @@ export class PropertyRepository {
         return this.propertyModel.create(propertyDto);
     }
 
-    public async delete(id: string) {
-        return this.propertyModel.findByIdAndDelete(id);
+    public async delete(id: string): Promise<boolean> {
+        const deletedDocument = await this.propertyModel.findByIdAndDelete(id) as PropertyDocument | null;
+
+        return Boolean(deletedDocument);
     }
 }

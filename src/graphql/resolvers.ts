@@ -7,7 +7,7 @@ const errorWrapper = (resolver: any) => async (parent: any, args: any, context: 
         return await resolver(parent, args, context, info);
     } catch (err: any) {
         throw new GraphQLError(err.message, {
-            extensions: { code: err?.code || 500 }
+            extensions: { code: err?.statusCode || 500 }
         });
     }
 };
