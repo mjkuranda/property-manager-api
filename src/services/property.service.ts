@@ -5,6 +5,7 @@ import { logger } from '../logger';
 import { WeatherStackService } from './weather-stack.service';
 import { CreatePropertyDto } from '../dtos/create-property.dto';
 import { isValidObjectId, SortOrder } from 'mongoose';
+import { usStates } from '../constants';
 
 export class PropertyService {
 
@@ -41,7 +42,11 @@ export class PropertyService {
         return property;
     }
 
-    public async create(city: string, street: string, state: string, zipCode: string) {
+    public async create(city: string, street: string, state: string, zipCode: number) {
+        if (!usStates.includes(state)) {
+            throw new Error(`${state} is not a valid US state!`);
+        }
+
         let response;
 
         // eslint-disable-next-line no-useless-catch

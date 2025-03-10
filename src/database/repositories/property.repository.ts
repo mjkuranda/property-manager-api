@@ -9,7 +9,7 @@ export class PropertyRepository {
 
     public async getAll(page: number = 1, limit: number = 10, filters?: PropertyFilters, sortOrder?: SortOrder): Promise<PropertyChunk> {
         const skip = (page - 1) * limit;
-        const sortValue = sortOrder === 'asc' ? 1 : -1;
+        const sortValue = (sortOrder ?? 'asc') === 'asc' ? 1 : -1;
 
         const [properties, total] = await Promise.all([
             this.propertyModel.find(filters ?? {}).sort({ createdAt: sortValue }).skip(skip).limit(limit),

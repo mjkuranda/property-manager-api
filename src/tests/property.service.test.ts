@@ -54,7 +54,7 @@ describe('PropertyService', () => {
             city: 'Test City',
             street: 'Street',
             state: 'State',
-            zipCode: '12345',
+            zipCode: 12345,
         }));
     });
 

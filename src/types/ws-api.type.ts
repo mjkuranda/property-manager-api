@@ -5,6 +5,7 @@ export type WsApiCurrentWeatherObject = any;
 export interface WsApiResponse {
     current: WsApiCurrentWeatherObject,
     location: {
+        country: string;
         lat: string;
         lon: string;
     }

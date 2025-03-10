@@ -4,7 +4,7 @@ export interface CreatePropertyDto {
     city: string;
     street: string;
     state: string;
-    zipCode: string;
+    zipCode: number;
     weatherData: WsApiCurrentWeatherObject;
     lat: number;
     long: number;

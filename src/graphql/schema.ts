@@ -7,7 +7,7 @@ const typeDefs = `
         city: String
         street: String
         state: String
-        zipCode: String
+        zipCode: Int
         weatherData: WeatherData
         lat: Float
         long: Float
@@ -33,7 +33,7 @@ const typeDefs = `
     }
     
     type Mutation {
-        createProperty(city: String!, street: String!, state: String!, zipCode: String!): Property
+        createProperty(city: String!, street: String!, state: String!, zipCode: Int!): Property
         deleteProperty(id: ID!): DeleteResponse
     }
     
