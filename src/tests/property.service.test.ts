@@ -4,6 +4,7 @@ import { WeatherStackService } from '../services/weather-stack.service';
 import { logger } from '../logger';
 import mongoose from 'mongoose';
 import { propertyModel } from '../database/models/property.model';
+import { NotFoundError } from '../errors/not-found.error';
 
 jest.mock('../database/repositories/property.repository');
 jest.mock('../services/weather-stack.service');
@@ -38,7 +39,18 @@ describe('PropertyService', () => {
     test('should throw error for invalid id in getById', async () => {
         const invalidId = 'invalid-id';
 
-        await expect(propertyService.getById(invalidId)).rejects.toThrow('Not valid object id.');
+        await expect(propertyService.getById(invalidId)).rejects.toThrow('Not valid object id!');
+    });
+
+    test('should throw NotFoundError if property not found', async () => {
+        const id = '00000020f51bb4362eee2a4d';
+
+        jest.spyOn(mongoose, 'isValidObjectId').mockResolvedValueOnce(true as never);
+        propertyRepository.getById = jest.fn().mockResolvedValue(null);
+
+        await expect(propertyService.getById(id)).rejects.toThrowError(NotFoundError);
+
+        expect(logger.error).toHaveBeenCalledWith(`Property with "${id}" ID does not exist.`);
     });
 
     test('should create property successfully', async () => {
@@ -47,14 +59,14 @@ describe('PropertyService', () => {
         jest.spyOn(weatherStackService, 'get').mockResolvedValueOnce(mockWeatherResponse as any);
         jest.spyOn(propertyRepository, 'create').mockResolvedValueOnce(mockCreateResponse as any);
 
-        const result = await propertyService.create('Test City', 'Street', 'State', '12345');
+        const result = await propertyService.create('New York',  'unknown', 'NY', 10002);
 
         expect(result).toEqual(mockCreateResponse);
         expect(propertyRepository.create).toHaveBeenCalledWith(expect.objectContaining({
-            city: 'Test City',
-            street: 'Street',
-            state: 'State',
-            zipCode: '12345',
+            city: 'New York',
+            street: 'unknown',
+            state: 'NY',
+            zipCode: 10002,
         }));
     });
 
@@ -72,6 +84,6 @@ describe('PropertyService', () => {
     test('should throw error for invalid id in delete', async () => {
         const invalidId = 'invalid-id';
 
-        await expect(propertyService.delete(invalidId)).rejects.toThrow('Not valid object id.');
+        await expect(propertyService.delete(invalidId)).rejects.toThrow('Not valid object id!');
     });
 });

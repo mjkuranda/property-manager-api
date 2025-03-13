@@ -21,7 +21,7 @@ export class MongoService {
         };
 
         try {
-            logger.info('Attempt to connect to the MongoDB.');
+            logger.info('Attempt to connect to the MongoDB...');
             await mongoose.connect(uri);
 
             logger.info('Successfully connected to MongoDB.');
